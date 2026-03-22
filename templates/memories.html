@@ -1,0 +1,1741 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memories 💙</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Outfit:wght@300;400;500&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --ink: #070714;
+            --blue: #4fc3f7;
+            --violet: #9b72f7;
+            --rose: #f472b6;
+            --gold: #fbbf24;
+            --white: #f0f4ff;
+            --glass: rgba(255, 255, 255, 0.055);
+            --border: rgba(255, 255, 255, 0.09);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--ink);
+            color: var(--white);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* ── Cursor ── */
+        #cur {
+            position: fixed;
+            width: 14px;
+            height: 14px;
+            border: 2px solid var(--blue);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            transition: transform .16s, background .18s;
+        }
+
+        #cur.big {
+            transform: scale(3.2);
+            background: rgba(79, 195, 247, .14);
+        }
+
+        /* ── Stars ── */
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Aurora blobs ── */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(120px);
+            opacity: .2;
+            pointer-events: none;
+            z-index: 0;
+            animation: blobDrift 16s ease-in-out infinite alternate;
+        }
+
+        .b1 {
+            width: 550px;
+            height: 480px;
+            background: var(--violet);
+            top: -12%;
+            left: -8%;
+            animation-delay: 0s;
+        }
+
+        .b2 {
+            width: 480px;
+            height: 550px;
+            background: var(--blue);
+            bottom: -18%;
+            right: -8%;
+            animation-delay: -6s;
+        }
+
+        .b3 {
+            width: 380px;
+            height: 380px;
+            background: var(--rose);
+            top: 38%;
+            left: 32%;
+            animation-delay: -11s;
+        }
+
+        @keyframes blobDrift {
+            from {
+                transform: translate(0, 0) scale(1)
+            }
+
+            to {
+                transform: translate(50px, 35px) scale(1.12)
+            }
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 48px;
+            background: rgba(7, 7, 20, .55);
+            backdrop-filter: blur(18px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-brand {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            letter-spacing: .06em;
+            background: linear-gradient(90deg, var(--blue), var(--violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: rgba(240, 244, 255, .6);
+            text-decoration: none;
+            font-size: 13px;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            transition: color .2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--blue);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 120px 24px 60px;
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--blue);
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp .9s .3s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(56px, 10vw, 110px);
+            line-height: 1.05;
+            background: linear-gradient(135deg, var(--white) 0%, var(--blue) 45%, var(--violet) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0;
+            animation: fadeUp .9s .5s forwards;
+        }
+
+        .hero-sub {
+            margin-top: 18px;
+            font-size: clamp(15px, 2vw, 19px);
+            font-weight: 300;
+            color: rgba(240, 244, 255, .55);
+            opacity: 0;
+            animation: fadeUp .9s .7s forwards;
+        }
+
+        #typeText {
+            margin-top: 14px;
+            font-style: italic;
+            font-size: clamp(14px, 1.8vw, 18px);
+            color: var(--rose);
+            min-height: 1.5em;
+            opacity: 0;
+            animation: fadeUp .9s 1s forwards;
+        }
+
+        #typeCursor {
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            background: var(--rose);
+            vertical-align: middle;
+            margin-left: 3px;
+            animation: blink .65s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        .scroll-hint {
+            position: absolute;
+            bottom: 36px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(255, 255, 255, .28);
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            animation: fadeUp .9s 1.4s forwards;
+            opacity: 0;
+        }
+
+        .scroll-arrow {
+            width: 16px;
+            height: 16px;
+            border-right: 1.5px solid rgba(255, 255, 255, .28);
+            border-bottom: 1.5px solid rgba(255, 255, 255, .28);
+            transform: rotate(45deg);
+            animation: arrowBounce 1.4s infinite;
+        }
+
+        @keyframes arrowBounce {
+
+            0%,
+            100% {
+                transform: rotate(45deg) translate(0, 0)
+            }
+
+            50% {
+                transform: rotate(45deg) translate(4px, 4px)
+            }
+        }
+
+        /* ── Music panel ── */
+        #musicPanel {
+            position: fixed;
+            top: 68px;
+            right: 20px;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        #musicBtn {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            color: var(--white);
+            font-size: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow .3s, transform .2s;
+            position: relative;
+        }
+
+        #musicBtn:hover {
+            box-shadow: 0 0 22px rgba(79, 195, 247, .45);
+            transform: scale(1.08);
+        }
+
+        #musicBtn.playing {
+            animation: pulseMu 2s infinite;
+        }
+
+        @keyframes pulseMu {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 3px rgba(79, 195, 247, .28)
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(79, 195, 247, 0)
+            }
+        }
+
+        /* Equaliser bars inside button when playing */
+        #eqBars {
+            display: none;
+            align-items: flex-end;
+            gap: 2px;
+            height: 14px;
+        }
+
+        #musicBtn.playing #eqBars {
+            display: flex;
+        }
+
+        #musicBtn.playing #btnIcon {
+            display: none;
+        }
+
+        .eq-bar {
+            width: 3px;
+            border-radius: 2px;
+            background: var(--blue);
+            animation: eqAnim 0.6s ease-in-out infinite alternate;
+        }
+
+        .eq-bar:nth-child(1) {
+            height: 6px;
+            animation-delay: 0s
+        }
+
+        .eq-bar:nth-child(2) {
+            height: 12px;
+            animation-delay: .15s
+        }
+
+        .eq-bar:nth-child(3) {
+            height: 8px;
+            animation-delay: .3s
+        }
+
+        .eq-bar:nth-child(4) {
+            height: 14px;
+            animation-delay: .1s
+        }
+
+        @keyframes eqAnim {
+            from {
+                transform: scaleY(1)
+            }
+
+            to {
+                transform: scaleY(.3)
+            }
+        }
+
+        /* Volume slider row */
+        #volRow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 6px 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s;
+        }
+
+        #volRow.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #volRow span {
+            font-size: 14px;
+        }
+
+        #volSlider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--blue) 0%, rgba(255, 255, 255, .2) 0%);
+            outline: none;
+            cursor: pointer;
+        }
+
+        #volSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--white);
+            cursor: pointer;
+        }
+
+        /* Toast */
+        #musicToast {
+            position: fixed;
+            bottom: 32px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 10px 24px;
+            font-size: 13px;
+            letter-spacing: .06em;
+            color: var(--white);
+            z-index: 200;
+            opacity: 0;
+            transition: opacity .4s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        #musicToast.show {
+            opacity: 1;
+        }
+
+        /* ── Section ── */
+        section {
+            position: relative;
+            z-index: 2;
+            padding: 80px 24px;
+        }
+
+        .section-label {
+            text-align: center;
+            font-size: 11px;
+            letter-spacing: .35em;
+            text-transform: uppercase;
+            color: var(--violet);
+            margin-bottom: 16px;
+        }
+
+        .section-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(32px, 5vw, 52px);
+            text-align: center;
+            margin-bottom: 52px;
+        }
+
+        /* ═══════════════════════════════════════
+       CURTAIN GALLERY
+    ═══════════════════════════════════════ */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 28px;
+            max-width: 1120px;
+            margin: 0 auto;
+        }
+
+        /* The card wrapper — clips everything */
+        .card {
+            position: relative;
+            aspect-ratio: 4/3;
+            border-radius: 18px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid var(--border);
+            background: var(--glass);
+        }
+
+        /* The actual photo / placeholder */
+        .card img {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            transition: transform .6s cubic-bezier(.25, .8, .25, 1);
+        }
+
+        .card:hover img {
+            transform: scale(1.06);
+        }
+
+        .card-placeholder {
+            position: absolute;
+            inset: 0;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-size: 46px;
+            gap: 12px;
+            background: linear-gradient(135deg, rgba(79, 195, 247, .12), rgba(155, 114, 247, .14));
+        }
+
+        .card-placeholder span {
+            font-size: 13px;
+            letter-spacing: .1em;
+            color: rgba(255, 255, 255, .45);
+        }
+
+        /* ── Curtain halves ── */
+        .curtain {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            z-index: 5;
+            width: 51%;
+            /* slight overlap so no gap */
+            transition: transform .72s cubic-bezier(.77, 0, .175, 1);
+            pointer-events: none;
+        }
+
+        /* Velvet-like curtain texture via layered pseudo */
+        .curtain::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg,
+                    rgba(0, 0, 0, 0) 0px,
+                    rgba(0, 0, 0, 0) 6px,
+                    rgba(0, 0, 0, .12) 7px);
+            pointer-events: none;
+        }
+
+        .curtain-left {
+            left: 0;
+            background: linear-gradient(135deg, #1a0530 0%, #2d0f4e 40%, #1c0738 100%);
+            transform-origin: left center;
+            border-radius: 0 4px 4px 0;
+        }
+
+        .curtain-right {
+            right: 0;
+            background: linear-gradient(225deg, #1a0530 0%, #2d0f4e 40%, #1c0738 100%);
+            transform-origin: right center;
+            border-radius: 4px 0 0 4px;
+        }
+
+        /* Curtain edge shimmer */
+        .curtain-left::after,
+        .curtain-right::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(180deg, rgba(155, 114, 247, .6), rgba(79, 195, 247, .4), rgba(155, 114, 247, .6));
+            pointer-events: none;
+        }
+
+        .curtain-left::after {
+            right: 0;
+        }
+
+        .curtain-right::after {
+            left: 0;
+        }
+
+        /* Open state — triggered by JS click, not hover */
+        .card.open .curtain-left {
+            transform: translateX(-100%);
+        }
+
+        .card.open .curtain-right {
+            transform: translateX(100%);
+        }
+
+        /* Zoom image when open */
+        .card.open img {
+            transform: scale(1.06);
+        }
+
+        /* Top curtain rod */
+        .curtain-rod {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 8px;
+            z-index: 8;
+            background: linear-gradient(90deg, #3d1060, #7c3aed, #4fc3f7, #7c3aed, #3d1060);
+            pointer-events: none;
+        }
+
+        .curtain-rod::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(255, 255, 255, .25), transparent);
+            border-radius: 2px;
+        }
+
+        /* Label revealed on hover */
+        .overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 6;
+            padding: 28px 18px 18px;
+            background: linear-gradient(to top, rgba(7, 7, 20, .9) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity .4s .2s;
+            pointer-events: none;
+        }
+
+        .card.open .overlay {
+            opacity: 1;
+        }
+
+        .overlay-tag {
+            font-size: 16px;
+            font-weight: 500;
+            letter-spacing: .05em;
+        }
+
+        /* ── LIGHTBOX ── */
+        #lightbox {
+            position: fixed;
+            inset: 0;
+            background: rgba(5, 5, 18, .96);
+            backdrop-filter: blur(22px);
+            display: none;
+            place-items: center;
+            z-index: 200;
+        }
+
+        #lightbox.active {
+            display: grid;
+            animation: fadeIn .3s;
+        }
+
+        #lightbox img {
+            max-width: 88vw;
+            max-height: 88vh;
+            border-radius: 16px;
+            animation: zoomIn .35s cubic-bezier(.2, .8, .3, 1);
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(.88);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        .lb-close {
+            position: absolute;
+            top: 24px;
+            right: 28px;
+            font-size: 28px;
+            color: rgba(255, 255, 255, .45);
+            cursor: pointer;
+            background: none;
+            border: none;
+            transition: color .2s;
+            line-height: 1;
+        }
+
+        .lb-close:hover {
+            color: white;
+        }
+
+        /* ── NOTES ── */
+        .notes-row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 26px;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+
+        .note {
+            background: var(--white);
+            color: #1a1a2e;
+            padding: 18px 20px;
+            width: 155px;
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.55;
+            box-shadow: 0 10px 32px rgba(0, 0, 0, .4);
+            border-radius: 3px;
+            position: relative;
+            animation: floatNote 4s ease-in-out infinite alternate;
+        }
+
+        .note::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 26px;
+            height: 10px;
+            background: rgba(251, 191, 36, .75);
+            border-radius: 2px;
+        }
+
+        .note:nth-child(1) {
+            transform: rotate(-4deg);
+            animation-delay: 0s
+        }
+
+        .note:nth-child(2) {
+            transform: rotate(3deg);
+            animation-delay: -.8s
+        }
+
+        .note:nth-child(3) {
+            transform: rotate(-6deg);
+            animation-delay: -1.6s
+        }
+
+        .note:nth-child(4) {
+            transform: rotate(5deg);
+            animation-delay: -2.4s
+        }
+
+        @keyframes floatNote {
+            from {
+                translate: 0 0
+            }
+
+            to {
+                translate: 0 -18px
+            }
+        }
+
+        /* ── COUNTDOWN ── */
+        .countdown-box {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+
+        .cd-unit {
+            text-align: center;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px 30px;
+            backdrop-filter: blur(12px);
+            min-width: 100px;
+        }
+
+        .cd-number {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 52px;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--blue), var(--violet));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .cd-label {
+            font-size: 11px;
+            letter-spacing: .2em;
+            text-transform: uppercase;
+            color: rgba(240, 244, 255, .4);
+            margin-top: 6px;
+        }
+
+        /* ── LETTER ── */
+        .letter-area {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .btn {
+            padding: 14px 36px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-family: 'Outfit', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: .08em;
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, .12);
+            opacity: 0;
+            transition: opacity .2s;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-gradient {
+            background: linear-gradient(135deg, var(--rose), var(--violet));
+            color: white;
+            box-shadow: 0 6px 28px rgba(155, 114, 247, .35);
+        }
+
+        .btn-gradient:hover {
+            box-shadow: 0 10px 40px rgba(155, 114, 247, .6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1.5px solid var(--border);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--blue);
+            box-shadow: 0 0 24px rgba(79, 195, 247, .25);
+        }
+
+        #letterText {
+            margin-top: 28px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(18px, 3vw, 26px);
+            font-style: italic;
+            color: var(--blue);
+            opacity: 0;
+            transition: opacity .5s;
+            line-height: 1.7;
+        }
+
+        #letterText.show {
+            opacity: 1;
+        }
+
+        /* ── POPUP ── */
+        #popup {
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            display: none;
+            place-items: center;
+            background: rgba(5, 5, 18, .85);
+            backdrop-filter: blur(24px);
+        }
+
+        #popup.active {
+            display: grid;
+            animation: fadeIn .3s;
+        }
+
+        .popup-card {
+            background: linear-gradient(135deg, rgba(79, 195, 247, .08), rgba(155, 114, 247, .08));
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 52px 48px;
+            text-align: center;
+            max-width: 440px;
+            backdrop-filter: blur(20px);
+            animation: zoomIn .35s cubic-bezier(.2, .8, .3, 1);
+        }
+
+        .popup-emoji {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .popup-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 32px;
+            margin-bottom: 12px;
+        }
+
+        .popup-msg {
+            color: rgba(240, 244, 255, .65);
+            font-size: 15px;
+            line-height: 1.75;
+            margin-bottom: 28px;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 40px 24px;
+            color: rgba(240, 244, 255, .28);
+            font-size: 13px;
+            letter-spacing: .1em;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ── Floating hearts ── */
+        .heart {
+            position: fixed;
+            pointer-events: none;
+            font-size: clamp(16px, 2.5vw, 26px);
+            z-index: 3;
+            animation: floatHeart 8s ease-in forwards;
+        }
+
+        @keyframes floatHeart {
+            0% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                opacity: 1
+            }
+
+            100% {
+                transform: translateY(-108vh) rotate(15deg) scale(1.3);
+                opacity: 0
+            }
+        }
+
+        /* ── Click sparks ── */
+        .cspark {
+            position: fixed;
+            pointer-events: none;
+            font-size: 18px;
+            z-index: 3;
+            animation: sparkOut .65s ease-out forwards;
+        }
+
+        @keyframes sparkOut {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0
+            }
+        }
+
+        /* Tap hint on curtain center */
+        .curtain-hint {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            transform: translateY(-50%);
+            text-align: center;
+            font-size: 12px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, .45);
+            z-index: 6;
+            pointer-events: none;
+            transition: opacity .3s;
+        }
+
+        .card.open .curtain-hint {
+            opacity: 0;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(24px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        /* ══════════════════════════════
+   RESPONSIVE MEDIA QUERIES
+══════════════════════════════ */
+
+        /* Tablet — 768px */
+        @media (max-width: 768px) {
+            nav {
+                padding: 14px 24px;
+            }
+
+            .nav-brand {
+                font-size: 17px;
+            }
+
+            .nav-links {
+                gap: 18px;
+            }
+
+            .nav-links a {
+                font-size: 11px;
+            }
+
+            .hero {
+                padding: 110px 20px 60px;
+            }
+
+            .hero h1 {
+                font-size: clamp(44px, 10vw, 72px);
+            }
+
+            .hero-sub {
+                font-size: clamp(14px, 2vw, 17px);
+            }
+
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 18px;
+                padding: 0 8px;
+            }
+
+            section {
+                padding: 64px 20px;
+            }
+
+            .section-title {
+                font-size: clamp(26px, 4.5vw, 38px);
+                margin-bottom: 36px;
+            }
+
+            .notes-row {
+                gap: 18px;
+            }
+
+            .note {
+                width: 135px;
+                font-size: 12px;
+                padding: 14px 16px;
+            }
+
+            .countdown-box {
+                gap: 16px;
+            }
+
+            .cd-unit {
+                padding: 16px 20px;
+                min-width: 80px;
+            }
+
+            .cd-number {
+                font-size: 40px;
+            }
+
+            .popup-card {
+                padding: 40px 32px;
+                max-width: 88vw;
+            }
+
+            .popup-title {
+                font-size: 26px;
+            }
+
+            .popup-msg {
+                font-size: 14px;
+            }
+
+            #musicPanel {
+                top: 62px;
+                right: 14px;
+            }
+
+            #musicBtn {
+                width: 40px;
+                height: 40px;
+                font-size: 17px;
+            }
+        }
+
+        /* Mobile — 480px */
+        @media (max-width: 480px) {
+            nav {
+                padding: 12px 16px;
+            }
+
+            .nav-brand {
+                font-size: 15px;
+            }
+
+            .nav-links {
+                gap: 12px;
+            }
+
+            .nav-links a {
+                font-size: 10px;
+                letter-spacing: .07em;
+            }
+
+            .hero {
+                padding: 95px 16px 50px;
+            }
+
+            .hero h1 {
+                font-size: clamp(36px, 11vw, 52px);
+                line-height: 1.15;
+            }
+
+            .hero-eyebrow {
+                font-size: 10px;
+                letter-spacing: .28em;
+            }
+
+            .hero-sub {
+                font-size: 14px;
+                margin-top: 12px;
+            }
+
+            #typeText {
+                font-size: 13px;
+            }
+
+            .scroll-hint {
+                bottom: 22px;
+                font-size: 9px;
+            }
+
+            /* Gallery — single column on small phones */
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+                max-width: 360px;
+                margin: 0 auto;
+            }
+
+            .card {
+                border-radius: 14px;
+            }
+
+            .curtain-hint {
+                font-size: 10px;
+                letter-spacing: .12em;
+            }
+
+            .curtain-rod {
+                height: 6px;
+            }
+
+            .overlay-tag {
+                font-size: 14px;
+            }
+
+            /* Lightbox */
+            #lightbox img {
+                max-width: 96vw;
+                max-height: 80vh;
+                border-radius: 12px;
+            }
+
+            .lb-close {
+                top: 14px;
+                right: 16px;
+                font-size: 22px;
+            }
+
+            /* Notes */
+            .notes-row {
+                gap: 14px;
+            }
+
+            .note {
+                width: 120px;
+                font-size: 11px;
+                padding: 12px 14px;
+            }
+
+            /* Countdown */
+            .countdown-box {
+                gap: 10px;
+            }
+
+            .cd-unit {
+                padding: 14px 14px;
+                min-width: 68px;
+                border-radius: 12px;
+            }
+
+            .cd-number {
+                font-size: 32px;
+            }
+
+            .cd-label {
+                font-size: 9px;
+                margin-top: 4px;
+            }
+
+            /* Letter & buttons */
+            .letter-area {
+                padding: 0 8px;
+            }
+
+            .btn {
+                padding: 12px 26px;
+                font-size: 13px;
+            }
+
+            #letterText {
+                font-size: clamp(15px, 4vw, 18px);
+            }
+
+            /* Surprise popup */
+            .popup-card {
+                padding: 36px 20px 28px;
+                border-radius: 18px;
+                max-width: 94vw;
+            }
+
+            .popup-emoji {
+                font-size: 46px;
+                margin-bottom: 14px;
+            }
+
+            .popup-title {
+                font-size: 22px;
+            }
+
+            .popup-msg {
+                font-size: 13px;
+                line-height: 1.65;
+                margin-bottom: 22px;
+            }
+
+            /* Music */
+            #volRow {
+                display: none !important;
+            }
+
+            #musicPanel {
+                top: 58px;
+                right: 10px;
+            }
+
+            #musicBtn {
+                width: 36px;
+                height: 36px;
+                font-size: 15px;
+            }
+
+            #musicToast {
+                font-size: 11px;
+                padding: 8px 16px;
+                max-width: 90vw;
+                text-align: center;
+            }
+
+            footer {
+                font-size: 11px;
+                padding: 30px 16px;
+            }
+        }
+
+        /* Very small — 360px */
+        @media (max-width: 360px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .notes-row {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .note {
+                width: 200px;
+                transform: none !important;
+            }
+
+            .countdown-box {
+                gap: 8px;
+            }
+
+            .cd-unit {
+                min-width: 58px;
+                padding: 12px 10px;
+            }
+
+            .cd-number {
+                font-size: 28px;
+            }
+
+            .btn {
+                font-size: 12px;
+                padding: 11px 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cur"></div>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-brand">📸 Memories</div>
+        <div class="nav-links">
+            <a href="/">Home</a>
+            <a href="/memories">📸 Memories</a>
+            <a href="/surprise">Surprise</a>
+        </div>
+    </nav>
+
+    <!-- Music Panel -->
+    <div id="musicPanel">
+        <button id="musicBtn" onclick="toggleMusic()" title="Toggle music">
+            <span id="btnIcon">🎵</span>
+            <div id="eqBars">
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+            </div>
+        </button>
+        <div id="volRow">
+            <span>🔈</span>
+            <input type="range" id="volSlider" min="0" max="100" value="50" />
+            <span>🔊</span>
+        </div>
+    </div>
+    <div id="musicToast">🎵 Music playing — click 🎵 to pause</div>
+
+    <audio id="bgMusic" loop>
+        <source src="/static/music/birthday.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- HERO -->
+    <div class="hero">
+        <p class="hero-eyebrow">✦ A Collection of Moments</p>
+        <h1>Our Best<br />Moments 💙</h1>
+        <p class="hero-sub">Every moment with you is a chapter worth keeping</p>
+        <p id="typeText"><span id="typeCursor"></span></p>
+        <div class="scroll-hint">
+            <span>scroll</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </div>
+
+    <!-- GALLERY -->
+    <section>
+        <p class="section-label">✦ The Gallery</p>
+        <h2 class="section-title">Click to Reveal 🎭</h2>
+        <div class="gallery-grid">
+
+            <!-- Card helper: curtain-rod + left curtain + right curtain + image -->
+            <div class="card" onclick="openImg(this)">
+                <img src="/static/images/img1.jpg"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Trip" />
+                <div class="card-placeholder">🏖️<span>Trip</span></div>
+                <div class="curtain-rod"></div>
+                <div class="curtain curtain-left"></div>
+                <div class="curtain curtain-right"></div>
+                <div class="curtain-hint">✦ tap to reveal</div>
+                <div class="overlay"><span class="overlay-tag">Trip 🏖️</span></div>
+            </div>
+
+            <div class="card" onclick="openImg(this)">
+                <img src="/static/images/img2.jpg"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Fun" />
+                <div class="card-placeholder">😂<span>Fun Days</span></div>
+                <div class="curtain-rod"></div>
+                <div class="curtain curtain-left"></div>
+                <div class="curtain curtain-right"></div>
+                <div class="curtain-hint">✦ tap to reveal</div>
+                <div class="overlay"><span class="overlay-tag">Fun 😂</span></div>
+            </div>
+
+            <div class="card" onclick="openImg(this)">
+                <img src="/static/images/img3.jpg"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="College" />
+                <div class="card-placeholder">🎓<span>College</span></div>
+                <div class="curtain-rod"></div>
+                <div class="curtain curtain-left"></div>
+                <div class="curtain curtain-right"></div>
+                <div class="curtain-hint">✦ tap to reveal</div>
+                <div class="overlay"><span class="overlay-tag">College 🎓</span></div>
+            </div>
+
+            <div class="card" onclick="openImg(this)">
+                <img src="/static/images/img4.jpg"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Night" />
+                <div class="card-placeholder">🌙<span>Night Out</span></div>
+                <div class="curtain-rod"></div>
+                <div class="curtain curtain-left"></div>
+                <div class="curtain curtain-right"></div>
+                <div class="curtain-hint">✦ tap to reveal</div>
+                <div class="overlay"><span class="overlay-tag">Night 🌙</span></div>
+            </div>
+
+            <div class="card" onclick="openImg(this)">
+                <img src="/static/images/img5.jpg"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Crazy" />
+                <div class="card-placeholder">🤪<span>Crazy Times</span></div>
+                <div class="curtain-rod"></div>
+                <div class="curtain curtain-left"></div>
+                <div class="curtain curtain-right"></div>
+                <div class="curtain-hint">✦ tap to reveal</div>
+                <div class="overlay"><span class="overlay-tag">Crazy 🤪</span></div>
+            </div>
+
+            <div class="card" onclick="openImg(this)">
+                <img src="/static/images/img6.jpg"
+                    onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" alt="Forever" />
+                <div class="card-placeholder">💖<span>Forever</span></div>
+                <div class="curtain-rod"></div>
+                <div class="curtain curtain-left"></div>
+                <div class="curtain curtain-right"></div>
+                <div class="curtain-hint">✦ tap to reveal</div>
+                <div class="overlay"><span class="overlay-tag">Forever 💖</span></div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" onclick="closeImg()">
+        <button class="lb-close" onclick="closeImg()">✕</button>
+        <img id="lightImg" src="" alt="Memory" />
+    </div>
+
+    <!-- NOTES -->
+    <section>
+        <p class="section-label">✦ Little Notes</p>
+        <h2 class="section-title">Written in the Stars</h2>
+        <div class="notes-row">
+            <div class="note">First Trip Together 💙</div>
+            <div class="note">That Funny Day 😂</div>
+            <div class="note">Late Night Talks 🌙</div>
+            <div class="note">Always & Forever 💖</div>
+        </div>
+    </section>
+
+    <!-- COUNTDOWN -->
+    <section>
+        <p class="section-label">✦ Time Together</p>
+        <h2 class="section-title">Counting Down to More Memories</h2>
+        <div class="countdown-box">
+            <div class="cd-unit">
+                <div class="cd-number" id="cd-d">—</div>
+                <div class="cd-label">Days</div>
+            </div>
+            <div class="cd-unit">
+                <div class="cd-number" id="cd-h">—</div>
+                <div class="cd-label">Hours</div>
+            </div>
+            <div class="cd-unit">
+                <div class="cd-number" id="cd-m">—</div>
+                <div class="cd-label">Minutes</div>
+            </div>
+            <div class="cd-unit">
+                <div class="cd-number" id="cd-s">—</div>
+                <div class="cd-label">Seconds</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LETTER -->
+    <section>
+        <p class="section-label">✦ For You</p>
+        <h2 class="section-title">A Little Message</h2>
+        <div class="letter-area">
+            <button class="btn btn-gradient" onclick="generateLetter()">💌 Generate Message</button>
+            <p id="letterText"></p>
+        </div>
+    </section>
+
+    <!-- SURPRISE -->
+    <section style="text-align:center;">
+        <button class="btn btn-outline" onclick="showSurprise()">🎁 Open Surprise</button>
+    </section>
+
+    <!-- POPUP -->
+    <div id="popup" onclick="closePopup()">
+        <div class="popup-card" onclick="event.stopPropagation()">
+            <div class="popup-emoji">💖</div>
+            <h3 class="popup-title">You Are Everything</h3>
+            <p class="popup-msg">Every laugh, every memory, every late-night talk — it all means the world. Thank you
+                for being you. 💙</p>
+            <button class="btn btn-gradient" onclick="closePopup()">Close with Love ✨</button>
+        </div>
+    </div>
+
+    <footer>Made with 💙 — Every moment matters</footer>
+
+    <script>
+        /* ── Cursor ── */
+        const cur = document.getElementById('cur');
+        document.addEventListener('mousemove', e => {
+            cur.style.left = e.clientX - 7 + 'px';
+            cur.style.top = e.clientY - 7 + 'px';
+        });
+        document.querySelectorAll('a,button,.card').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('big'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+        });
+
+        /* ── Stars ── */
+        const cvs = document.getElementById('bgCanvas');
+        const ctx = cvs.getContext('2d');
+        let W, H, stars = [];
+        function resize() {
+            W = cvs.width = innerWidth;
+            H = cvs.height = innerHeight;
+            stars = Array.from({ length: 280 }, () => ({
+                x: Math.random() * W, y: Math.random() * H,
+                r: Math.random() * 1.6 + .2,
+                speed: Math.random() * .35 + .08,
+                op: Math.random()
+            }));
+        }
+        resize(); window.addEventListener('resize', resize);
+        function drawStars() {
+            ctx.clearRect(0, 0, W, H);
+            stars.forEach(s => {
+                s.op += (Math.random() - .5) * .035;
+                s.op = Math.max(.04, Math.min(1, s.op));
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(220,230,255,${s.op})`; ctx.fill();
+                s.y += s.speed;
+                if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+
+        /* ── Typewriter ── */
+        const typeEl = document.getElementById('typeText');
+        const typeCur = document.getElementById('typeCursor');
+        const typeStr = "You make every moment magical 💙";
+        let ti = 0;
+        function typeEffect() {
+            if (ti < typeStr.length) {
+                typeCur.insertAdjacentText('beforebegin', typeStr[ti]); ti++;
+                setTimeout(typeEffect, 55);
+            } else { setTimeout(() => typeCur.remove(), 1200); }
+        }
+        setTimeout(typeEffect, 1200);
+
+        /* ── Music — auto-play on first interaction ── */
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const volSlider = document.getElementById('volSlider');
+        const volRow = document.getElementById('volRow');
+        const toast = document.getElementById('musicToast');
+        let playing = false;
+        let started = false;
+
+        music.volume = 0;
+
+        function fadeIn(m, targetVol, ms) {
+            const steps = 40;
+            const inc = targetVol / steps;
+            const delay = ms / steps;
+            let v = 0;
+            const iv = setInterval(() => {
+                v = Math.min(v + inc, targetVol);
+                m.volume = v;
+                updateSlider(v);
+                if (v >= targetVol) clearInterval(iv);
+            }, delay);
+        }
+
+        function updateSlider(vol) {
+            volSlider.value = Math.round(vol * 100);
+            const pct = volSlider.value + '%';
+            volSlider.style.background =
+                `linear-gradient(90deg, var(--blue) ${pct}, rgba(255,255,255,.2) ${pct})`;
+        }
+
+        function startMusic() {
+            music.play().then(() => {
+                playing = true;
+                started = true;
+                musicBtn.classList.add('playing');
+                volRow.classList.add('show');
+                fadeIn(music, 0.5, 2000);
+                showToast();
+            }).catch(() => { });
+        }
+
+        function showToast() {
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3500);
+        }
+
+        function toggleMusic() {
+            if (!started) { startMusic(); return; }
+            if (playing) {
+                music.pause();
+                musicBtn.classList.remove('playing');
+                volRow.classList.remove('show');
+                playing = false;
+            } else {
+                music.play().catch(() => { });
+                musicBtn.classList.add('playing');
+                volRow.classList.add('show');
+                playing = true;
+                showToast();
+            }
+        }
+
+        /* Volume slider */
+        volSlider.addEventListener('input', () => {
+            music.volume = volSlider.value / 100;
+            updateSlider(music.volume);
+        });
+
+        /* Show volume row on btn hover */
+        musicBtn.addEventListener('mouseenter', () => { if (playing) volRow.classList.add('show'); });
+
+        /* Auto-play on first user interaction anywhere on page */
+        function tryAutoPlay() {
+            if (started) return;
+            startMusic();
+            document.removeEventListener('click', tryAutoPlay);
+            document.removeEventListener('keydown', tryAutoPlay);
+            document.removeEventListener('touchstart', tryAutoPlay);
+        }
+        document.addEventListener('click', tryAutoPlay);
+        document.addEventListener('keydown', tryAutoPlay);
+        document.addEventListener('touchstart', tryAutoPlay);
+
+        /* ── Curtain click logic ── */
+        function openImg(card) {
+            if (!card.classList.contains('open')) {
+                /* First click — open curtains */
+                /* Close any other open cards */
+                document.querySelectorAll('.card.open').forEach(c => c.classList.remove('open'));
+                card.classList.add('open');
+            } else {
+                /* Second click — open lightbox */
+                const img = card.querySelector('img');
+                if (!img || img.style.display === 'none') return;
+                document.getElementById('lightImg').src = img.src;
+                document.getElementById('lightbox').classList.add('active');
+            }
+        }
+        /* Close curtains when clicking outside cards */
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.card') && !e.target.closest('#lightbox')) {
+                document.querySelectorAll('.card.open').forEach(c => c.classList.remove('open'));
+            }
+        });
+
+        function closeImg() { document.getElementById('lightbox').classList.remove('active'); }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeImg(); closePopup(); } });
+
+        /* ── Countdown ── */
+        const target = new Date('2026-12-31').getTime();
+        function tick() {
+            const diff = Math.max(0, target - Date.now());
+            const pad = n => String(n).padStart(2, '0');
+            document.getElementById('cd-d').textContent = pad(Math.floor(diff / (864e5)));
+            document.getElementById('cd-h').textContent = pad(Math.floor((diff % 864e5) / 36e5));
+            document.getElementById('cd-m').textContent = pad(Math.floor((diff % 36e5) / 6e4));
+            document.getElementById('cd-s').textContent = pad(Math.floor((diff % 6e4) / 1e3));
+        }
+        tick(); setInterval(tick, 1000);
+
+        /* ── Letter ── */
+        const msgs = [
+            "I love you more than words can say 💙",
+            "You are my favorite chapter in this story ❤️",
+            "Forever isn't long enough with you 💫",
+            "You are my happiness, my home ✨",
+            "Every memory with you is golden 🌟"
+        ];
+        function generateLetter() {
+            const el = document.getElementById('letterText');
+            el.classList.remove('show');
+            setTimeout(() => { el.textContent = msgs[Math.floor(Math.random() * msgs.length)]; el.classList.add('show'); }, 300);
+        }
+
+        /* ── Popup ── */
+        function showSurprise() { document.getElementById('popup').classList.add('active'); }
+        function closePopup() { document.getElementById('popup').classList.remove('active'); }
+
+        /* ── Hearts ── */
+        const hEmojis = ['💖', '💙', '❤️', '💛', '💜', '🩷', '💫'];
+        function spawnHeart() {
+            const h = document.createElement('div');
+            h.className = 'heart';
+            h.textContent = hEmojis[Math.floor(Math.random() * hEmojis.length)];
+            h.style.left = Math.random() * 100 + 'vw';
+            h.style.bottom = '-50px';
+            h.style.animationDuration = 6 + Math.random() * 4 + 's';
+            document.body.appendChild(h);
+            setTimeout(() => h.remove(), 11000);
+        }
+        setInterval(spawnHeart, 380);
+
+        /* ── Click sparks ── */
+        document.addEventListener('click', e => {
+            if (e.target.closest('button') || e.target.closest('.card')) {
+                ['✨', '💫', '⭐', '🌟'].forEach((em, i) => {
+                    const s = document.createElement('div');
+                    s.className = 'cspark'; s.textContent = em;
+                    s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
+                    s.style.animationDelay = i * 60 + 'ms';
+                    document.body.appendChild(s);
+                    setTimeout(() => s.remove(), 700);
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

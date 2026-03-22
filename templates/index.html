@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Last Day 🌸</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,300;1,400&family=Jost:wght@300;400&display=swap"
+        rel="stylesheet" />
+    <style>
+        :root {
+            --rose: #e8607a;
+            --blush: #f4a7b5;
+            --gold: #d4a96a;
+            --mist: #c9d4e8;
+            --cream: #fdf6f0;
+            --ink: #110d16;
+            --deep: #1c1020;
+            --glass: rgba(255, 255, 255, 0.055);
+            --border: rgba(255, 255, 255, 0.10);
+        }
+
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Jost', sans-serif;
+            background: var(--ink);
+            color: var(--cream);
+            overflow-x: hidden;
+            cursor: none;
+        }
+
+        /* ── Custom cursor ── */
+        #cur {
+            position: fixed;
+            width: 12px;
+            height: 12px;
+            border: 1.5px solid var(--blush);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            mix-blend-mode: screen;
+            transition: transform .18s, background .2s;
+        }
+
+        #cur.big {
+            transform: scale(3);
+            background: rgba(244, 167, 181, .12);
+        }
+
+        /* ── Star canvas ── */
+        #bgCanvas {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ── Soft blobs ── */
+        .blob {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(140px);
+            opacity: .15;
+            pointer-events: none;
+            z-index: 0;
+            animation: blobDrift 20s ease-in-out infinite alternate;
+        }
+
+        .b1 {
+            width: 580px;
+            height: 500px;
+            background: #e8607a;
+            top: -12%;
+            left: -10%;
+            animation-delay: 0s;
+        }
+
+        .b2 {
+            width: 460px;
+            height: 540px;
+            background: #6a7dc9;
+            bottom: -20%;
+            right: -8%;
+            animation-delay: -8s;
+        }
+
+        .b3 {
+            width: 380px;
+            height: 380px;
+            background: #d4a96a;
+            top: 40%;
+            left: 28%;
+            animation-delay: -14s;
+        }
+
+        @keyframes blobDrift {
+            from {
+                transform: translate(0, 0) scale(1)
+            }
+
+            to {
+                transform: translate(50px, 40px) scale(1.1)
+            }
+        }
+
+        /* ── NAV ── */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 48px;
+            background: rgba(17, 13, 22, .6);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav-logo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            letter-spacing: .08em;
+            color: var(--blush);
+            font-style: italic;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 26px;
+            list-style: none;
+        }
+
+        nav ul a {
+            color: rgba(253, 246, 240, .5);
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            transition: color .2s;
+        }
+
+        nav ul a:hover {
+            color: var(--blush);
+        }
+
+        /* ── HERO ── */
+        .hero {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 130px 28px 70px;
+        }
+
+        .hero-tag {
+            font-size: 11px;
+            letter-spacing: .45em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 26px;
+            opacity: 0;
+            animation: fadeUp .9s .2s forwards;
+        }
+
+        .hero h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(52px, 10vw, 108px);
+            font-weight: 600;
+            line-height: 1.1;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--blush) 45%, var(--gold) 85%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradShift 7s ease infinite, fadeUp .9s .4s both;
+        }
+
+        @keyframes gradShift {
+
+            0%,
+            100% {
+                background-position: 0% 50%
+            }
+
+            50% {
+                background-position: 100% 50%
+            }
+        }
+
+        .hero-divider {
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--blush), transparent);
+            margin: 28px auto;
+            opacity: 0;
+            animation: fadeUp .9s .6s forwards;
+        }
+
+        /* Poetic intro verse */
+        .hero-verse {
+            max-width: 520px;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(17px, 2.2vw, 22px);
+            line-height: 1.9;
+            color: rgba(253, 246, 240, .72);
+            opacity: 0;
+            animation: fadeUp .9s .7s forwards;
+        }
+
+        .hero-verse span {
+            color: var(--blush);
+            font-style: normal;
+        }
+
+        .hero-cta {
+            margin-top: 42px;
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+            justify-content: center;
+            opacity: 0;
+            animation: fadeUp .9s 1s forwards;
+        }
+
+        .btn {
+            padding: 14px 36px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Jost', sans-serif;
+            font-size: 13px;
+            font-weight: 400;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform .25s, box-shadow .25s;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(255, 255, 255, .1);
+            opacity: 0;
+            transition: opacity .2s;
+        }
+
+        .btn:hover::before {
+            opacity: 1;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--rose), #c04060);
+            color: #fff;
+            box-shadow: 0 6px 28px rgba(232, 96, 122, .35);
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 12px 44px rgba(232, 96, 122, .6);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--cream);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--blush);
+            box-shadow: 0 0 20px rgba(244, 167, 181, .2);
+        }
+
+        /* scroll hint */
+        .scroll-hint {
+            position: absolute;
+            bottom: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            color: rgba(253, 246, 240, .25);
+            font-size: 10px;
+            letter-spacing: .25em;
+            text-transform: uppercase;
+            opacity: 0;
+            animation: fadeUp .9s 1.4s forwards;
+        }
+
+        .scroll-arrow {
+            width: 14px;
+            height: 14px;
+            border-right: 1px solid rgba(253, 246, 240, .25);
+            border-bottom: 1px solid rgba(253, 246, 240, .25);
+            transform: rotate(45deg);
+            animation: arrowBounce 1.4s infinite;
+        }
+
+        @keyframes arrowBounce {
+
+            0%,
+            100% {
+                transform: rotate(45deg) translate(0, 0)
+            }
+
+            50% {
+                transform: rotate(45deg) translate(4px, 4px)
+            }
+        }
+
+        /* ── SECTIONS ── */
+        section {
+            position: relative;
+            z-index: 2;
+            padding: 90px 28px;
+        }
+
+        .s-tag {
+            text-align: center;
+            font-size: 10px;
+            letter-spacing: .4em;
+            text-transform: uppercase;
+            color: var(--gold);
+            margin-bottom: 14px;
+        }
+
+        .s-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: clamp(28px, 5vw, 48px);
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 52px;
+            line-height: 1.2;
+        }
+
+        /* ── POEM SECTION ── */
+        .poem-wrap {
+            max-width: 660px;
+            margin: 0 auto;
+            background: var(--glass);
+            backdrop-filter: blur(18px);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 56px 52px;
+            position: relative;
+        }
+
+        .poem-quote {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 80px;
+            line-height: .8;
+            color: var(--rose);
+            opacity: .22;
+            position: absolute;
+            top: 20px;
+            left: 28px;
+            pointer-events: none;
+        }
+
+        .poem-quote-r {
+            left: auto;
+            right: 24px;
+            top: auto;
+            bottom: 14px;
+        }
+
+        .poem-stanza {
+            margin-bottom: 28px;
+        }
+
+        .poem-stanza:last-of-type {
+            margin-bottom: 0;
+        }
+
+        .poem-line {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(16px, 2.1vw, 20px);
+            color: rgba(253, 246, 240, .88);
+            line-height: 1.85;
+            display: block;
+            opacity: 0;
+            transform: translateY(14px);
+            transition: opacity .75s ease, transform .75s ease;
+        }
+
+        .poem-line.vis {
+            opacity: 1;
+            transform: none;
+        }
+
+        .poem-sign {
+            display: block;
+            margin-top: 32px;
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 16px;
+            color: var(--gold);
+            letter-spacing: .06em;
+            opacity: 0;
+            transition: opacity 1s ease .4s;
+        }
+
+        .poem-sign.vis {
+            opacity: 1;
+        }
+
+        /* ── MEMORY CARDS ── */
+        .mem-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .mem-card {
+            aspect-ratio: 1;
+            border-radius: 20px;
+            background: var(--glass);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(12px);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            cursor: default;
+            transition: transform .35s cubic-bezier(.2, .8, .3, 1), box-shadow .35s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mem-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(232, 96, 122, .1), rgba(212, 169, 106, .07));
+            opacity: 0;
+            transition: opacity .3s;
+        }
+
+        .mem-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 48px rgba(0, 0, 0, .45);
+        }
+
+        .mem-card:hover::after {
+            opacity: 1;
+        }
+
+        .mem-icon {
+            font-size: 36px;
+        }
+
+        .mem-label {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 14px;
+            color: rgba(253, 246, 240, .6);
+            text-align: center;
+            line-height: 1.5;
+            padding: 0 12px;
+        }
+
+        /* ── LETTER REVEAL ── */
+        .letter-box {
+            max-width: 620px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        #letterOut {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(17px, 2.2vw, 21px);
+            color: rgba(253, 246, 240, .78);
+            line-height: 1.9;
+            margin-top: 32px;
+            min-height: 2em;
+            opacity: 0;
+            transition: opacity .6s;
+        }
+
+        #letterOut.show {
+            opacity: 1;
+        }
+
+        /* ── MUSIC PANEL ── */
+        #musicPanel {
+            position: fixed;
+            top: 68px;
+            right: 20px;
+            z-index: 60;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        #musicBtn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            color: var(--cream);
+            font-size: 18px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: box-shadow .3s, transform .2s;
+        }
+
+        #musicBtn:hover {
+            box-shadow: 0 0 20px rgba(232, 96, 122, .45);
+            transform: scale(1.08);
+        }
+
+        #musicBtn.playing {
+            animation: pulseMu 2s infinite;
+        }
+
+        @keyframes pulseMu {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 3px rgba(232, 96, 122, .28)
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(232, 96, 122, 0)
+            }
+        }
+
+        #eqBars {
+            display: none;
+            align-items: flex-end;
+            gap: 2px;
+            height: 14px;
+        }
+
+        #musicBtn.playing #eqBars {
+            display: flex;
+        }
+
+        #musicBtn.playing #btnIcon {
+            display: none;
+        }
+
+        .eq-bar {
+            width: 3px;
+            border-radius: 2px;
+            background: var(--blush);
+            animation: eqAnim .6s ease-in-out infinite alternate;
+        }
+
+        .eq-bar:nth-child(1) {
+            height: 5px;
+            animation-delay: 0s
+        }
+
+        .eq-bar:nth-child(2) {
+            height: 12px;
+            animation-delay: .15s
+        }
+
+        .eq-bar:nth-child(3) {
+            height: 7px;
+            animation-delay: .3s
+        }
+
+        .eq-bar:nth-child(4) {
+            height: 13px;
+            animation-delay: .1s
+        }
+
+        @keyframes eqAnim {
+            from {
+                transform: scaleY(1)
+            }
+
+            to {
+                transform: scaleY(.2)
+            }
+        }
+
+        #volRow {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--glass);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 6px 14px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity .3s;
+        }
+
+        #volRow.show {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        #volRow span {
+            font-size: 14px;
+        }
+
+        #volSlider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 80px;
+            height: 3px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--blush) 0%, rgba(255, 255, 255, .15) 0%);
+            outline: none;
+            cursor: pointer;
+        }
+
+        #volSlider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            background: var(--cream);
+            cursor: pointer;
+        }
+
+        #toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--glass);
+            backdrop-filter: blur(16px);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 10px 24px;
+            font-size: 12px;
+            letter-spacing: .08em;
+            color: var(--cream);
+            z-index: 200;
+            opacity: 0;
+            transition: opacity .4s;
+            pointer-events: none;
+            white-space: nowrap;
+        }
+
+        #toast.show {
+            opacity: 1;
+        }
+
+        /* ── MODAL ── */
+        #modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 300;
+            place-items: center;
+            background: rgba(17, 13, 22, .94);
+            backdrop-filter: blur(28px);
+        }
+
+        #modal.active {
+            display: grid;
+            animation: fadeIn .35s;
+        }
+
+        .modal-card {
+            background: linear-gradient(135deg, rgba(232, 96, 122, .08), rgba(212, 169, 106, .06));
+            border: 1px solid var(--border);
+            border-radius: 28px;
+            padding: 56px 52px;
+            text-align: center;
+            max-width: 500px;
+            backdrop-filter: blur(22px);
+            animation: zoomIn .4s cubic-bezier(.2, .8, .3, 1);
+        }
+
+        .modal-icon {
+            font-size: 56px;
+            margin-bottom: 18px;
+            display: block;
+            animation: popIn .6s .2s both;
+        }
+
+        @keyframes popIn {
+            from {
+                transform: scale(0) rotate(-15deg);
+                opacity: 0
+            }
+
+            60% {
+                transform: scale(1.15) rotate(3deg)
+            }
+
+            to {
+                transform: scale(1) rotate(0);
+                opacity: 1
+            }
+        }
+
+        .modal-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 34px;
+            font-weight: 600;
+            background: linear-gradient(135deg, var(--cream), var(--blush), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 18px;
+        }
+
+        #typed {
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: clamp(16px, 2vw, 19px);
+            color: rgba(253, 246, 240, .78);
+            line-height: 1.85;
+            min-height: 3em;
+            margin-bottom: 32px;
+        }
+
+        #typeCursor {
+            display: inline-block;
+            width: 1.5px;
+            height: 1em;
+            background: var(--blush);
+            vertical-align: middle;
+            margin-left: 3px;
+            animation: blink .65s steps(1) infinite;
+        }
+
+        @keyframes blink {
+            50% {
+                opacity: 0
+            }
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            text-align: center;
+            padding: 50px 24px 40px;
+            color: rgba(253, 246, 240, .22);
+            font-family: 'Cormorant Garamond', serif;
+            font-style: italic;
+            font-size: 15px;
+            letter-spacing: .05em;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* ── Floating petals ── */
+        .petal {
+            position: fixed;
+            pointer-events: none;
+            font-size: clamp(14px, 2vw, 22px);
+            z-index: 3;
+            animation: petalFall linear forwards;
+        }
+
+        @keyframes petalFall {
+            0% {
+                transform: translateY(-40px) rotate(0deg);
+                opacity: 1
+            }
+
+            100% {
+                transform: translateY(108vh) rotate(360deg);
+                opacity: 0
+            }
+        }
+
+        /* ── Click sparks ── */
+        .cspark {
+            position: fixed;
+            pointer-events: none;
+            font-size: 16px;
+            z-index: 4;
+            animation: sparkOut .6s ease-out forwards;
+        }
+
+        @keyframes sparkOut {
+            0% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1
+            }
+
+            100% {
+                transform: translate(-50%, -50%) scale(2.5);
+                opacity: 0
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(22px)
+            }
+
+            to {
+                opacity: 1;
+                transform: none
+            }
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0
+            }
+
+            to {
+                opacity: 1
+            }
+        }
+
+        @keyframes zoomIn {
+            from {
+                transform: scale(.88);
+                opacity: 0
+            }
+
+            to {
+                transform: scale(1);
+                opacity: 1
+            }
+        }
+
+        /* ══════════════════════════════
+   RESPONSIVE MEDIA QUERIES
+══════════════════════════════ */
+
+        /* Tablet — 768px */
+        @media (max-width: 768px) {
+            nav {
+                padding: 14px 24px;
+            }
+
+            .nav-logo {
+                font-size: 15px;
+            }
+
+            nav ul {
+                gap: 16px;
+            }
+
+            .hero {
+                padding: 110px 20px 60px;
+            }
+
+            .hero h1 {
+                font-size: clamp(42px, 10vw, 72px);
+            }
+
+            .hero-verse {
+                font-size: clamp(15px, 2.5vw, 18px);
+                padding: 0 10px;
+            }
+
+            .hero-cta {
+                gap: 12px;
+            }
+
+            .poem-wrap {
+                padding: 44px 32px;
+            }
+
+            .poem-quote {
+                font-size: 60px;
+            }
+
+            .mem-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 16px;
+            }
+
+            section {
+                padding: 70px 20px;
+            }
+
+            .s-title {
+                font-size: clamp(24px, 5vw, 36px);
+                margin-bottom: 36px;
+            }
+
+            .modal-card {
+                padding: 44px 32px;
+                max-width: 90vw;
+            }
+
+            .modal-title {
+                font-size: 26px;
+            }
+
+            #typed {
+                font-size: 15px;
+            }
+
+            #musicPanel {
+                top: 60px;
+                right: 14px;
+            }
+        }
+
+        /* Mobile — 480px */
+        @media (max-width: 480px) {
+            nav {
+                padding: 12px 16px;
+            }
+
+            nav ul {
+                gap: 12px;
+            }
+
+            nav ul a {
+                font-size: 10px;
+                letter-spacing: .08em;
+            }
+
+            .hero {
+                padding: 100px 16px 50px;
+                gap: 16px;
+            }
+
+            .hero h1 {
+                font-size: clamp(38px, 12vw, 56px);
+                line-height: 1.15;
+            }
+
+            .hero-verse {
+                font-size: 15px;
+                line-height: 1.75;
+            }
+
+            .hero-cta {
+                flex-direction: column;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .btn {
+                padding: 12px 28px;
+                font-size: 12px;
+                width: 100%;
+                max-width: 260px;
+            }
+
+            .poem-wrap {
+                padding: 36px 20px;
+                border-radius: 18px;
+            }
+
+            .poem-quote {
+                font-size: 48px;
+                top: 12px;
+                left: 14px;
+            }
+
+            .poem-quote-r {
+                right: 12px;
+            }
+
+            .poem-line {
+                font-size: 14px;
+                line-height: 1.75;
+            }
+
+            .poem-sign {
+                font-size: 13px;
+                margin-top: 22px;
+            }
+
+            .poem-stanza {
+                margin-bottom: 20px;
+            }
+
+            .mem-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 12px;
+            }
+
+            .mem-card {
+                border-radius: 16px;
+            }
+
+            .mem-icon {
+                font-size: 28px;
+            }
+
+            .mem-label {
+                font-size: 12px;
+            }
+
+            section {
+                padding: 56px 16px;
+            }
+
+            .s-tag {
+                font-size: 9px;
+            }
+
+            .s-title {
+                font-size: clamp(22px, 6vw, 30px);
+                margin-bottom: 28px;
+            }
+
+            .modal-card {
+                padding: 36px 20px 30px;
+                border-radius: 20px;
+                max-width: 95vw;
+            }
+
+            .modal-title {
+                font-size: 22px;
+            }
+
+            .modal-icon {
+                font-size: 44px;
+            }
+
+            #typed {
+                font-size: 14px;
+                line-height: 1.75;
+                min-height: 2em;
+            }
+
+            #letterOut {
+                font-size: 15px;
+            }
+
+            footer {
+                font-size: 13px;
+                padding: 36px 16px 30px;
+            }
+
+            #volRow {
+                display: none !important;
+            }
+
+            #musicPanel {
+                top: 58px;
+                right: 12px;
+            }
+
+            #musicBtn {
+                width: 38px;
+                height: 38px;
+                font-size: 16px;
+            }
+
+            #toast {
+                font-size: 11px;
+                padding: 8px 18px;
+                max-width: 88vw;
+                text-align: center;
+            }
+
+            .scroll-hint {
+                bottom: 22px;
+            }
+        }
+
+        /* Very small — 360px */
+        @media (max-width: 360px) {
+            .hero h1 {
+                font-size: 34px;
+            }
+
+            .mem-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .btn {
+                font-size: 11px;
+                padding: 11px 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="cur"></div>
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="blob b3"></div>
+    <canvas id="bgCanvas"></canvas>
+
+    <!-- NAV -->
+    <nav>
+        <div class="nav-logo">our last day ✦</div>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/memories">Memories</a></li>
+            <li><a href="/surprise">Surprise</a></li>
+
+        </ul>
+    </nav>
+
+    <!-- Music Panel -->
+    <div id="musicPanel">
+        <button id="musicBtn" onclick="toggleMusic()" title="Toggle music">
+            <span id="btnIcon">🎵</span>
+            <div id="eqBars">
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+                <div class="eq-bar"></div>
+            </div>
+        </button>
+        <div id="volRow">
+            <span>🔈</span>
+            <input type="range" id="volSlider" min="0" max="100" value="50" />
+            <span>🔊</span>
+        </div>
+    </div>
+    <div id="toast">🎵 a song for this moment ♪</div>
+    <audio id="bgMusic" loop>
+        <source src="/static/music/birthday.mp3" type="audio/mpeg" />
+    </audio>
+
+    <!-- HERO -->
+    <div class="hero">
+        <p class="hero-tag">✦ college's last chapter ✦</p>
+        <h1>Our Last<br />Meet</h1>
+        <div class="hero-divider"></div>
+        <p class="hero-verse">
+            The halls that held our laughter,<br />
+            the bench where time forgot to move —<br />
+            <span>today becomes a memory</span><br />
+            I will carry my whole life through.
+        </p>
+        <div class="hero-cta">
+            <button class="btn btn-primary" onclick="openModal()">🌸 Read My Heart</button>
+            <button class="btn btn-ghost"
+                onclick="document.querySelector('#memories').scrollIntoView({behavior:'smooth'})">our moments ↓</button>
+        </div>
+        <div class="scroll-hint">
+            <span>read on</span>
+            <div class="scroll-arrow"></div>
+        </div>
+    </div>
+
+    <!-- POEM -->
+    <section>
+        <p class="s-tag">✦ written only for you</p>
+        <h2 class="s-title">A Poem I Could Not Keep Inside</h2>
+        <div class="poem-wrap">
+            <div class="poem-quote">❝</div>
+
+            <div class="poem-stanza">
+                <span class="poem-line">I did not know a corridor could feel like home,</span>
+                <span class="poem-line">until I found you standing in it.</span>
+            </div>
+            <div class="poem-stanza">
+                <span class="poem-line">We built a world in borrowed classrooms,</span>
+                <span class="poem-line">in canteen queues and hurried notes,</span>
+                <span class="poem-line">in the silence between lectures</span>
+                <span class="poem-line">that somehow always filled with us.</span>
+            </div>
+            <div class="poem-stanza">
+                <span class="poem-line">Today the gates will close behind us</span>
+                <span class="poem-line">and college will become a photograph —</span>
+                <span class="poem-line">but you, my love, you will never</span>
+                <span class="poem-line">become a thing of the past.</span>
+            </div>
+            <div class="poem-stanza">
+                <span class="poem-line">So let this last walk be slow.</span>
+                <span class="poem-line">Let my hand find yours one more time</span>
+                <span class="poem-line">in these familiar, beloved halls.</span>
+                <span class="poem-line">Because endings, when shared with you,</span>
+                <span class="poem-line">still feel like the most beautiful thing.</span>
+            </div>
+
+            <span class="poem-sign">— yours, always, beyond every last day 🌸</span>
+            <div class="poem-quote poem-quote-r">❞</div>
+        </div>
+    </section>
+
+    <!-- MEMORIES -->
+    <section id="memories">
+        <p class="s-tag">✦ pages we wrote together</p>
+        <h2 class="s-title">What I Will Never Forget</h2>
+        <div class="mem-grid">
+            <div class="mem-card">
+                <div class="mem-icon">🏛️</div>
+                <div class="mem-label">the corridors<br />that knew our footsteps</div>
+            </div>
+            <div class="mem-card">
+                <div class="mem-icon">☕</div>
+                <div class="mem-label">canteen days<br />that felt like forever</div>
+            </div>
+            <div class="mem-card">
+                <div class="mem-icon">📖</div>
+                <div class="mem-label">studying together,<br />learning nothing, feeling everything</div>
+            </div>
+            <div class="mem-card">
+                <div class="mem-icon">🌅</div>
+                <div class="mem-label">the evenings<br />we did not want to end</div>
+            </div>
+            <div class="mem-card">
+                <div class="mem-icon">😂</div>
+                <div class="mem-label">laughing until<br />the whole class noticed</div>
+            </div>
+            <div class="mem-card">
+                <div class="mem-icon">🌸</div>
+                <div class="mem-label">this last day —<br />already my favourite memory</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- LETTER REVEAL -->
+    <section>
+        <p class="s-tag">✦ one last thing</p>
+        <h2 class="s-title">Something I Need to Say 💌</h2>
+        <div class="letter-box">
+            <button class="btn btn-primary" onclick="generateLetter()">open my letter 🌸</button>
+            <p id="letterOut"></p>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        not goodbye — just, until next time, my love 🌸
+    </footer>
+
+    <!-- MODAL -->
+    <div id="modal" onclick="closeModal()">
+        <div class="modal-card" onclick="event.stopPropagation()">
+            <span class="modal-icon">🌸</span>
+            <h2 class="modal-title">From My Heart</h2>
+            <p id="typed"><span id="typeCursor"></span></p>
+            <button class="btn btn-primary" onclick="closeModal()">hold this close ✦</button>
+        </div>
+    </div>
+
+    <script>
+        /* ── Cursor ── */
+        const cur = document.getElementById('cur');
+        document.addEventListener('mousemove', e => {
+            cur.style.left = e.clientX - 6 + 'px';
+            cur.style.top = e.clientY - 6 + 'px';
+        });
+        document.querySelectorAll('a,button,.mem-card').forEach(el => {
+            el.addEventListener('mouseenter', () => cur.classList.add('big'));
+            el.addEventListener('mouseleave', () => cur.classList.remove('big'));
+        });
+
+        /* ── Stars ── */
+        const cvs = document.getElementById('bgCanvas');
+        const ctx = cvs.getContext('2d');
+        let W, H, stars = [];
+        function resize() {
+            W = cvs.width = innerWidth; H = cvs.height = innerHeight;
+            stars = Array.from({ length: 260 }, () => ({
+                x: Math.random() * W, y: Math.random() * H,
+                r: Math.random() * 1.5 + .2, speed: Math.random() * .25 + .06, op: Math.random()
+            }));
+        }
+        resize(); window.addEventListener('resize', resize);
+        function drawStars() {
+            ctx.clearRect(0, 0, W, H);
+            stars.forEach(s => {
+                s.op += (Math.random() - .5) * .03;
+                s.op = Math.max(.04, Math.min(1, s.op));
+                ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(245,220,210,${s.op})`; ctx.fill();
+                s.y += s.speed;
+                if (s.y > H) { s.y = 0; s.x = Math.random() * W; }
+            });
+            requestAnimationFrame(drawStars);
+        }
+        drawStars();
+
+        /* ── Poem scroll reveal ── */
+        const poemLines = document.querySelectorAll('.poem-line, .poem-sign');
+        const poemObs = new IntersectionObserver(entries => {
+            entries.forEach((e, i) => {
+                if (e.isIntersecting) {
+                    setTimeout(() => e.target.classList.add('vis'), i * 90);
+                }
+            });
+        }, { threshold: 0.15 });
+        poemLines.forEach(l => poemObs.observe(l));
+
+        /* ── Modal ── */
+        function openModal() {
+            document.getElementById('modal').classList.add('active');
+            typeMsg();
+            petals();
+        }
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
+
+        /* ── Typewriter ── */
+        function typeMsg() {
+            const text = "Every corridor we walked, every laugh we shared, every quiet moment between us — I have kept all of it. College ends today, but you and I? We are just beginning. Thank you for being my favourite part of these years. I love you. 🌸";
+            const el = document.getElementById('typed');
+            const blink = document.getElementById('typeCursor');
+            el.innerHTML = ''; el.appendChild(blink);
+            let i = 0;
+            const iv = setInterval(() => {
+                if (i < text.length) { blink.insertAdjacentText('beforebegin', text[i]); i++; }
+                else { clearInterval(iv); setTimeout(() => blink.remove(), 1200); }
+            }, 36);
+        }
+
+        /* ── Letter messages ── */
+        const letters = [
+            "Endings scare me less when I know you are on the other side of them. 🌸",
+            "I memorised the way you laugh in that hallway. I will carry it everywhere. ✦",
+            "College gave me many things — but you were the only one that mattered. 💛",
+            "No last day is truly last when the love stays. And mine does. Always. 🌹",
+            "The best chapter of these years was never written in any textbook — it was you. 📖"
+        ];
+        function generateLetter() {
+            const el = document.getElementById('letterOut');
+            el.classList.remove('show');
+            setTimeout(() => {
+                el.textContent = letters[Math.floor(Math.random() * letters.length)];
+                el.classList.add('show');
+            }, 300);
+        }
+
+        /* ── Floating petals ── */
+        const petalEmojis = ['🌸', '🌷', '🍂', '✨', '🌹', '💛', '🕊️'];
+        function spawnPetal() {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            p.textContent = petalEmojis[Math.floor(Math.random() * petalEmojis.length)];
+            p.style.left = Math.random() * 100 + 'vw';
+            p.style.top = '-30px';
+            const dur = 9 + Math.random() * 6;
+            p.style.animationDuration = dur + 's';
+            document.body.appendChild(p);
+            setTimeout(() => p.remove(), dur * 1000);
+        }
+        function petals() {
+            for (let i = 0; i < 3; i++) setTimeout(spawnPetal, i * 200);
+            const iv = setInterval(spawnPetal, 300);
+            setTimeout(() => clearInterval(iv), 12000);
+        }
+        setInterval(spawnPetal, 800);
+
+        /* ── Click sparks ── */
+        document.addEventListener('click', e => {
+            if (e.target.closest('button')) {
+                ['✨', '🌸', '💛', '🌿'].forEach((em, i) => {
+                    const s = document.createElement('div');
+                    s.className = 'cspark'; s.textContent = em;
+                    s.style.left = e.clientX + 'px'; s.style.top = e.clientY + 'px';
+                    s.style.animationDelay = i * 55 + 'ms';
+                    document.body.appendChild(s);
+                    setTimeout(() => s.remove(), 650);
+                });
+            }
+        });
+
+        /* ── Music ── */
+        const music = document.getElementById('bgMusic');
+        const musicBtn = document.getElementById('musicBtn');
+        const volSlider = document.getElementById('volSlider');
+        const volRow = document.getElementById('volRow');
+        const toast = document.getElementById('toast');
+        let playing = false, started = false;
+        music.volume = 0;
+
+        function updateSlider(v) {
+            volSlider.value = Math.round(v * 100);
+            const pct = volSlider.value + '%';
+            volSlider.style.background = `linear-gradient(90deg,var(--blush) ${pct},rgba(255,255,255,.15) ${pct})`;
+        }
+        function fadeInMusic(target, ms) {
+            const steps = 40, inc = target / steps, delay = ms / steps; let v = 0;
+            const iv = setInterval(() => { v = Math.min(v + inc, target); music.volume = v; updateSlider(v); if (v >= target) clearInterval(iv); }, delay);
+        }
+        function showToast() { toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 3500); }
+        function startMusic() {
+            music.play().then(() => { playing = started = true; musicBtn.classList.add('playing'); volRow.classList.add('show'); fadeInMusic(.5, 2200); showToast(); }).catch(() => { });
+        }
+        function toggleMusic() {
+            if (!started) { startMusic(); return; }
+            if (playing) { music.pause(); musicBtn.classList.remove('playing'); volRow.classList.remove('show'); playing = false; }
+            else { music.play().catch(() => { }); musicBtn.classList.add('playing'); volRow.classList.add('show'); playing = true; showToast(); }
+        }
+        volSlider.addEventListener('input', () => { music.volume = volSlider.value / 100; updateSlider(music.volume); });
+        musicBtn.addEventListener('mouseenter', () => { if (playing) volRow.classList.add('show'); });
+
+        /* Auto-play on first interaction */
+        function tryAutoPlay() {
+            if (started) return; startMusic();
+            document.removeEventListener('click', tryAutoPlay);
+            document.removeEventListener('keydown', tryAutoPlay);
+            document.removeEventListener('touchstart', tryAutoPlay);
+        }
+        document.addEventListener('click', tryAutoPlay);
+        document.addEventListener('keydown', tryAutoPlay);
+        document.addEventListener('touchstart', tryAutoPlay);
+    </script>
+</body>
+
+</html>
